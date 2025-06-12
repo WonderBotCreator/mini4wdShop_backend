@@ -1,0 +1,60 @@
+import jwt from "jsonwebtoken";
+import bcrypt from "bcrypt";
+import { PrismaClient } from '@prisma/client';
+import { withAccelerate } from '@prisma/extension-accelerate';
+import express, { NextFunction } from 'express';
+import z from "zod";
+
+
+const getTokenFrom = (auth:string|undefined): string|null=> {
+    
+    if(auth && auth.startsWith('Bearer ')){
+        console.log(auth.replace('Bearer ',''))
+        return auth.replace('Bearer ','')
+    }
+   return null;
+}
+
+const prisma = new PrismaClient()
+    .$extends(withAccelerate());
+
+const bookRouter = express.Router()
+
+
+bookRouter.post('/', async (req, res) => {
+    const { title, description } = req.body;
+
+    const token = getTokenFrom(req.get('authorization'))
+    let decodedToken = null;
+    if(token!== null)
+    {
+         decodedToken = jwt.verify(token, process.env.SECRET as string)
+    }
+   
+    console.log(decodedToken)
+
+    // const user = await prisma.user.findUnique({
+    //     where:{
+    //         id: decodedToken.id
+    //     }
+    // })
+    
+
+    
+
+//     const newPost = await prisma.book.create({
+//     data: {
+//       title: 'Join the Prisma Discord community',
+//       description: 'https://pris.ly/discord',
+//       author: {
+//         connect: {
+//           email: user?.email,
+//         },
+//       },
+//     },
+//   });
+
+    res.status(200).send({token})
+})
+
+export default bookRouter;
