@@ -23,7 +23,7 @@ const bookRouter = express.Router()
 
 bookRouter.post('/', async (req, res) => {
     const { title, description } = req.body;
-    console.log(title)
+    console.log("book request")
     const token = getTokenFrom(req.get('authorization'))
     let decodedToken = null;
     if(token!== null)
