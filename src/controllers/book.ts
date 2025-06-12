@@ -35,9 +35,9 @@ declare module 'jsonwebtoken' {
 
 const userIdFromJWT = (jwtToken: string): string | undefined => {
     try {
-        const { userId } = <jwt.UserIDJwtPayload>jwt.verify(jwtToken, process.env.SECRET as string)
+        const { id } = <jwt.UserIDJwtPayload>jwt.verify(jwtToken, process.env.SECRET as string)
 
-        return userId
+        return id
     } catch (error) {
         return undefined
     }
