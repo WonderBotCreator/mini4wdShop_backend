@@ -1,6 +1,7 @@
 import express from 'express'
 import loginRouter from './controllers/login';
 import cors from 'cors';
+import registerRouter from './controllers/register';
 
 const app = express();
 
@@ -13,6 +14,7 @@ app.get("/", (req, res) => {
 });
 
 app.use('/api/login', loginRouter);
+app.use('/api/register', registerRouter)
 
 app.listen(PORT, ()=>{
     console.log('Server running on port '+ PORT)

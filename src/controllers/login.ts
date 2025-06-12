@@ -10,18 +10,35 @@ const prisma = new PrismaClient()
 
 const loginRouter = express.Router()
 
-loginRouter.get('/', async(req, res)=>{
-    res.json({message: "hello"})
-})
 
 loginRouter.post('/', async (req, res) => {
     const { email, password } = req.body;
-    //console.log("post request")
-    // const user = await prisma.user.findUnique({
-    //     where: { email: email },
-    // });
+    const user = await prisma.user.findUnique({
+        where: {
+            email: email,
+        },
+    })
 
-    res.json({name: "Lando"});
+    console.log(user)
+
+    const passwordCorrect = user === null
+        ? false
+        : await bcrypt.compare(password, user.passwordHash)
+
+    if (!(user && passwordCorrect)) {
+        res.status(401).json({
+            error: 'invalid username or password'
+        })
+    }
+
+    const userForToken = {
+        username: user?.username,
+        id: user?.id
+    }
+
+    const token = jwt.sign(userForToken, process.env.SECRET as string, {expiresIn: 60*60})
+
+    res.status(200).send({token, username: user?.username})
 })
 
 export default loginRouter;
