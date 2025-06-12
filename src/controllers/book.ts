@@ -57,15 +57,18 @@ bookRouter.post('/', async (req, res) => {
          userID = userIdFromJWT(token)
     }
    
-   
-    console.log(userID)
-    // const user = await prisma.user.findUnique({
-    //     where:{
-    //         id: userID
-    //     }
-    // })
+    if(userID === undefined)
+    {
+        res.status(400).send({message: "Error add book"})
+    }
+    
+    const user = await prisma.user.findUnique({
+        where:{
+            id: userID
+        }
+    })
 
-    // console.log(user)
+    console.log(user)
     
 
     
