@@ -5,7 +5,8 @@
     "queries": "ts-node ./src/queries.ts",
     "caching": "ts-node ./src/caching.ts",
     "dev": "ts-node src/index.ts",
-    "start": "ts-node src/index.ts"
+    "start": "ts-node src/index.ts",
+    "build": "npx prisma db push && npx prisma generate && next build"
   },
   "dependencies": {
     "@prisma/client": "6.9.0",
