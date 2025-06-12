@@ -20,6 +20,10 @@ const prisma = new PrismaClient()
 
 const bookRouter = express.Router()
 
+bookRouter.get('/', async(req, res)=>{
+    res.status(200).send({message: "get book"})
+})
+
 
 bookRouter.post('/', async (req, res) => {
     const { title, description } = req.body;
