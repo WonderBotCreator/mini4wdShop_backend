@@ -1,0 +1,32 @@
+{
+  "name": "hello-prisma",
+  "license": "MIT",
+  "scripts": {
+    "queries": "ts-node ./src/queries.ts",
+    "caching": "ts-node ./src/caching.ts",
+    "dev": "ts-node ./src/index.ts"
+  },
+  "dependencies": {
+    "@prisma/client": "6.9.0",
+    "@prisma/extension-accelerate": "2.0.1",
+    "@types/node": "22.15.31",
+    "bcrypt": "^6.0.0",
+    "dotenv": "16.5.0",
+    "express": "^5.1.0",
+    "jsonwebtoken": "^9.0.2",
+    "zod": "^3.25.61"
+  },
+  "devDependencies": {
+    "@eslint/js": "^9.28.0",
+    "@stylistic/eslint-plugin": "^4.4.1",
+    "@types/bcrypt": "^5.0.2",
+    "@types/eslint__js": "^8.42.3",
+    "@types/express": "^5.0.3",
+    "@types/jsonwebtoken": "^9.0.9",
+    "eslint": "^9.28.0",
+    "prisma": "6.9.0",
+    "ts-node": "10.9.2",
+    "typescript": "5.8.2",
+    "typescript-eslint": "^8.34.0"
+  }
+}
