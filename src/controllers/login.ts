@@ -14,14 +14,14 @@ loginRouter.get('/', async(req, res)=>{
     res.json({message: "hello"})
 })
 
-// loginRouter.post('/', async (req, res) => {
-//     const { email, password } = req.body;
-//     console.log("post request")
-//     // const user = await prisma.user.findUnique({
-//     //     where: { email: email },
-//     // });
+loginRouter.post('/', async (req, res) => {
+    const { email, password } = req.body;
+    //console.log("post request")
+    // const user = await prisma.user.findUnique({
+    //     where: { email: email },
+    // });
 
-//     res.json({name: "Lando"});
-// })
+    res.json({name: "Lando"});
+})
 
 export default loginRouter;
