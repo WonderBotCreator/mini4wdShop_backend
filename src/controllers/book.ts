@@ -35,7 +35,7 @@ declare module 'jsonwebtoken' {
 
 const userIdFromJWT = (jwtToken: string): string | undefined => {
     try {
-        const { userId } = <jwt.UserIDJwtPayload>jwt.verify(jwtToken, process.env.SECRET)
+        const { userId } = <jwt.UserIDJwtPayload>jwt.verify(jwtToken, process.env.SECRET as string)
 
         return userId
     } catch (error) {
@@ -58,14 +58,14 @@ bookRouter.post('/', async (req, res) => {
     }
    
    
+    console.log(userID)
+    // const user = await prisma.user.findUnique({
+    //     where:{
+    //         id: userID
+    //     }
+    // })
 
-    const user = await prisma.user.findUnique({
-        where:{
-            id: userID
-        }
-    })
-
-    console.log(user)
+    // console.log(user)
     
 
     
