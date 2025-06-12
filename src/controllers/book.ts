@@ -1,4 +1,4 @@
-import jwt from "jsonwebtoken";
+import * as jwt from 'jsonwebtoken';
 import bcrypt from "bcrypt";
 import { PrismaClient } from '@prisma/client';
 import { withAccelerate } from '@prisma/extension-accelerate';
@@ -25,23 +25,47 @@ bookRouter.get('/', async(req, res)=>{
 })
 
 
+
+declare module 'jsonwebtoken' {
+    export interface UserIDJwtPayload extends jwt.JwtPayload {
+        id: string
+    }
+}
+
+
+const userIdFromJWT = (jwtToken: string): string | undefined => {
+    try {
+        const { userId } = <jwt.UserIDJwtPayload>jwt.verify(jwtToken, process.env.SECRET)
+
+        return userId
+    } catch (error) {
+        return undefined
+    }
+}
+
+
 bookRouter.post('/', async (req, res) => {
     const { title, description } = req.body;
     console.log("book request")
     const token = getTokenFrom(req.get('authorization'))
-    let decodedToken = null;
+    //let decodedToken: DecodedToken|null = null;
+
+    let userID = undefined
     if(token!== null)
     {
-         decodedToken = jwt.verify(token, process.env.SECRET as string)
+         //decodedToken = jwt.verify(token, process.env.SECRET as string) 
+         userID = userIdFromJWT(token)
     }
    
-    console.log(decodedToken)
+   
 
-    // const user = await prisma.user.findUnique({
-    //     where:{
-    //         id: decodedToken.id
-    //     }
-    // })
+    const user = await prisma.user.findUnique({
+        where:{
+            id: userID
+        }
+    })
+
+    console.log(user)
     
 
     
