@@ -6,7 +6,8 @@
     "caching": "ts-node ./src/caching.ts",
     "dev": "ts-node src/index.ts",
     "start": "ts-node src/index.ts",
-    "build": "npx prisma db push && npx prisma generate && next build"
+    "build": "npx prisma db push && npx prisma generate && next build",
+    "postinstall": "prisma generate"
   },
   "dependencies": {
     "@prisma/client": "6.9.0",
