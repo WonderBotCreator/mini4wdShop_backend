@@ -1,7 +1,10 @@
 import express from 'express'
 import loginRouter from './controllers/login';
+import cors from 'cors';
 
 const app = express();
+
+app.use(cors())
 app.use(express.json());
 
 const PORT = 3001;
