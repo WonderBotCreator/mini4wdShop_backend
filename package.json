@@ -4,8 +4,8 @@
   "scripts": {
     "queries": "ts-node ./src/queries.ts",
     "caching": "ts-node ./src/caching.ts",
-    "dev": "ts-node ./src/index.ts",
-    "start": "ts-node ./src/index.ts"
+    "dev": "ts-node src/index.ts",
+    "start": "ts-node src/index.ts"
   },
   "dependencies": {
     "@prisma/client": "6.9.0",
