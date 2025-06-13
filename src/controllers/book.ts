@@ -73,19 +73,19 @@ bookRouter.post('/', async (req, res) => {
 
     
 
-//     const newPost = await prisma.book.create({
-//     data: {
-//       title: 'Join the Prisma Discord community',
-//       description: 'https://pris.ly/discord',
-//       author: {
-//         connect: {
-//           email: user?.email,
-//         },
-//       },
-//     },
-//   });
+    const newBook = await prisma.book.create({
+    data: {
+      title: title,
+      description: description,
+      author: {
+        connect: {
+          id: user?.id,
+        },
+      },
+    },
+  });
 
-    res.status(200).send({token})
+    res.status(200).send({message: "Add book successfully"})
 })
 
 export default bookRouter;
