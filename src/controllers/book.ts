@@ -85,7 +85,8 @@ bookRouter.post('/', async (req, res) => {
     },
   });
 
-    res.status(200).send({message: "Add book successfully"})
+
+    res.status(200).send({message: "Add book successfully", status: "success"})
 })
 
 export default bookRouter;
