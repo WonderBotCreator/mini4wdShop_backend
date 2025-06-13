@@ -151,6 +151,54 @@ bookRouter.delete('/:id', async(req, res)=>{
 
 
 
+bookRouter.put('/:id', async(req, res)=>{
+    const id = req.params.id
+
+    const {title, description} = req.body
+    const token = getTokenFrom(req.get('authorization'))
+    //let decodedToken: DecodedToken|null = null;
+
+    let userID = undefined
+    if(token!== null)
+    {
+         //decodedToken = jwt.verify(token, process.env.SECRET as string) 
+         userID = userIdFromJWT(token)
+    }
+   
+    if(userID === undefined)
+    {
+        res.status(400).send({message: "Error get book", status: "error"})
+    }
+    
+    const user = await prisma.user.findUnique({
+        where:{
+            id: userID
+        }
+    })
+
+    if(user === null || user === undefined)
+    {
+        res.status(400).send({message: "Error get book", status: "error"})
+    }
+
+    const book = await prisma.book.update({
+        where: {
+            id: id,
+        },
+        data: {
+            title: title,
+            description: description
+        },
+    })
+
+
+    
+    
+    res.status(200).send({message: "edit book success", status: "success"})
+})
+
+
+
 
 
 bookRouter.post('/', async (req, res) => {
