@@ -78,7 +78,7 @@ bookRouter.get('/', async(req, res)=>{
 
 bookRouter.post('/', async (req, res) => {
     const { title, description } = req.body;
-    console.log("book request")
+    //console.log("book request")
     const token = getTokenFrom(req.get('authorization'))
     //let decodedToken: DecodedToken|null = null;
 
@@ -100,7 +100,7 @@ bookRouter.post('/', async (req, res) => {
         }
     })
 
-    console.log(user)
+    //console.log(user)
     
 
     
@@ -118,7 +118,7 @@ bookRouter.post('/', async (req, res) => {
   });
 
 
-    res.status(200).send({message: "Add book successfully", status: "success"})
+    res.status(200).send({book: newBook ,message: "Add book successfully", status: "success"})
 })
 
 export default bookRouter;
