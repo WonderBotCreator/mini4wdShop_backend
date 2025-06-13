@@ -194,7 +194,7 @@ bookRouter.put('/:id', async(req, res)=>{
 
     
     
-    res.status(200).send({message: "edit book success", status: "success"})
+    res.status(200).send({message: "edit book success",book: book, status: "success"})
 })
 
 
