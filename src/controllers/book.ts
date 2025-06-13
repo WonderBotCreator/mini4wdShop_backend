@@ -15,17 +15,6 @@ const getTokenFrom = (auth:string|undefined): string|null=> {
    return null;
 }
 
-const prisma = new PrismaClient()
-    .$extends(withAccelerate());
-
-const bookRouter = express.Router()
-
-bookRouter.get('/', async(req, res)=>{
-    res.status(200).send({message: "get book"})
-})
-
-
-
 declare module 'jsonwebtoken' {
     export interface UserIDJwtPayload extends jwt.JwtPayload {
         id: string
@@ -42,6 +31,49 @@ const userIdFromJWT = (jwtToken: string): string | undefined => {
         return undefined
     }
 }
+
+const prisma = new PrismaClient()
+    .$extends(withAccelerate());
+
+const bookRouter = express.Router()
+
+bookRouter.get('/', async(req, res)=>{
+    const token = getTokenFrom(req.get('authorization'))
+    //let decodedToken: DecodedToken|null = null;
+
+    let userID = undefined
+    if(token!== null)
+    {
+         //decodedToken = jwt.verify(token, process.env.SECRET as string) 
+         userID = userIdFromJWT(token)
+    }
+   
+    if(userID === undefined)
+    {
+        res.status(400).send({message: "Error get book", status: "error"})
+    }
+    
+    const user = await prisma.user.findUnique({
+        where:{
+            id: userID
+        }
+    })
+
+
+    const books = await prisma.book.findMany({
+        where:{
+            author:{
+                id: user?.id
+            }
+        }
+    })
+    
+    res.status(200).send({books: books, status: "success"})
+})
+
+
+
+
 
 
 bookRouter.post('/', async (req, res) => {
