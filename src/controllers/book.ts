@@ -72,6 +72,44 @@ bookRouter.get('/', async(req, res)=>{
 })
 
 
+bookRouter.get('/:id', async(req, res)=>{
+    const id = req.params.id
+    const token = getTokenFrom(req.get('authorization'))
+    //let decodedToken: DecodedToken|null = null;
+
+    let userID = undefined
+    if(token!== null)
+    {
+         //decodedToken = jwt.verify(token, process.env.SECRET as string) 
+         userID = userIdFromJWT(token)
+    }
+   
+    if(userID === undefined)
+    {
+        res.status(400).send({message: "Error get book", status: "error"})
+    }
+    
+    const user = await prisma.user.findUnique({
+        where:{
+            id: userID
+        }
+    })
+
+    if(user === null || user === undefined)
+    {
+        res.status(400).send({message: "Error get book", status: "error"})
+    }
+
+
+    const book = await prisma.book.findUnique({
+        where:{
+            id: id
+        }
+    })
+    
+    res.status(200).send({book: book, status: "success"})
+})
+
 
 
 
