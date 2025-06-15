@@ -100,7 +100,7 @@ registerRouter.post(
                 }
             })
 
-            res.json({ user: user1, cart: cart1, message: "register successfully", status: "success" });
+            res.json({ message: "register successfully", status: "success" });
 
         } catch (error) {
             console.log(error)
