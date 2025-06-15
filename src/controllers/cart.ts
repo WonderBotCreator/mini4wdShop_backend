@@ -68,7 +68,7 @@ cartRouter.post('/', async(request, response)=>{
         }
     })
 
-    
+    console.log(user)
 
     const cartItemObject = await prisma.cartItem.create({
         data:{
