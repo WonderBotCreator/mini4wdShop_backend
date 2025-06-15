@@ -73,7 +73,7 @@ cartRouter.post('/', async(request, response)=>{
     const cartItemObject = await prisma.cartItem.create({
         data:{
             productId: productID,
-            amount: amount,
+            amount: parseInt(amount),
             cart:{
                 connect:{
                     id: user?.cart?.id
@@ -81,7 +81,7 @@ cartRouter.post('/', async(request, response)=>{
             }
         }
     }) 
-
+    console.log("add item to cart successfull")
 
     response.status(200).send({ message: "add item to cart successfully", status: "success" });
 })
