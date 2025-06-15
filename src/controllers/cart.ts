@@ -131,7 +131,7 @@ cartRouter.post('/', async(request, response)=>{
         }
     })
 
-    console.log(user)
+    //console.log(user)
 
     const cartItemObject = await prisma.cartItem.create({
         data:{
@@ -144,9 +144,17 @@ cartRouter.post('/', async(request, response)=>{
             }
         }
     }) 
-    console.log("add item to cart successfull")
 
-    response.status(200).send({ message: "add item to cart successfully", status: "success" });
+
+    const product = await prisma.product.findUnique({
+        where:{
+            id: productID
+        }
+    })
+
+    //console.log("add item to cart successfull")
+
+    response.status(200).send({product: product, message: "add item to cart successfully", status: "success" });
 })
 
 
