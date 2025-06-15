@@ -131,19 +131,41 @@ cartRouter.post('/', async(request, response)=>{
         }
     })
 
-    //console.log(user)
+    const alreadyItemObject = await prisma.cartItem.findFirst({
+        where:{
+            productId: productID
+        }
+    })
 
-    const cartItemObject = await prisma.cartItem.create({
-        data:{
-            productId: productID,
-            amount: parseInt(amount),
-            cart:{
-                connect:{
-                    id: user?.cart?.id
+    if(!alreadyItemObject)
+    {
+        const cartItemObject = await prisma.cartItem.create({
+            data: {
+                productId: productID,
+                amount: parseInt(amount),
+                cart: {
+                    connect: {
+                        id: user?.cart?.id
+                    }
                 }
             }
-        }
-    }) 
+        }) 
+    }
+    else
+    {
+        const updateItem = await prisma.cartItem.update({
+            where:{
+                id: alreadyItemObject?.id
+            },
+            data:{
+                amount: alreadyItemObject.amount+ parseInt(amount)
+            }
+        })
+    }
+
+    //console.log(user)
+
+    
 
 
     const product = await prisma.product.findUnique({
