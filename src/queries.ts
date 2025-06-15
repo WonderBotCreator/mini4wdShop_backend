@@ -58,7 +58,27 @@ async function main() {
 // })
 // console.log(allmini4wd)
 
+// const user = await prisma.customer.findUnique({
+//         where:{
+//             id: '2de9afea-a743-4de8-bed2-42082ac68afd'
+//         },
+//         include:{
+//             cart: true
+//         }
+//     })
 
+//     const cart = await prisma.cart.findFirst({
+//       where:{
+//         owner:{
+//           id: user?.id
+//         }
+//       },
+//       include:{
+//         cartItems: true
+//       }
+//     })
+
+// console.log(cart)
 
 
 //   // Seed the database with users and posts

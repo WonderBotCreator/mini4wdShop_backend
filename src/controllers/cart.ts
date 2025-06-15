@@ -38,6 +38,67 @@ const prisma = new PrismaClient()
 
 const cartRouter = express.Router()
 
+cartRouter.get('/', async(request, response)=>{
+     
+    const token = getTokenFrom(request.get('authorization'))
+    //let decodedToken: DecodedToken|null = null;
+
+    let userID = undefined
+    if(token!== null)
+    {
+         //decodedToken = jwt.verify(token, process.env.SECRET as string) 
+         userID = userIdFromJWT(token)
+    }
+   
+    if(userID === undefined)
+    {
+        response.status(400).send({message: "Error add book"})
+        return
+    }
+    
+    const user = await prisma.customer.findUnique({
+        where:{
+            id: userID
+        },
+        include:{
+            cart: true
+        }
+    })
+
+    let products = []
+
+     const cart = await prisma.cart.findFirst({
+      where:{
+        owner:{
+          id: user?.id
+        }
+      },
+      include:{
+        cartItems: true
+      }
+    })
+
+    if(cart?.cartItems.length)
+    {
+        const itemLength:number|0 =  cart?.cartItems.length
+
+        for(let i = 0;i< itemLength;i++)
+        {
+            const product = await prisma.product.findUnique({
+                where:{
+                    id: cart?.cartItems[i].productId
+                }
+            })
+
+            products.push({product: product, amount: cart?.cartItems[i].amount})
+        }
+    }
+    
+    response.status(200).send({products: products, message: "get cart successfully", status: "success"})
+
+    
+})
+
 
 cartRouter.post('/', async(request, response)=>{
     const { productID, amount } = request.body;
