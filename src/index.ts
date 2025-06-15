@@ -1,8 +1,9 @@
 import express from 'express'
-import loginRouter from './controllers/login';
+
 import cors from 'cors';
+
+import productRouter from './controllers/Product';
 import registerRouter from './controllers/register';
-import bookRouter from './controllers/book';
 
 const app = express();
 
@@ -14,9 +15,9 @@ app.get("/", (req, res) => {
   res.send("Home page");
 });
 
-app.use('/api/login', loginRouter);
+// app.use('/api/login', loginRouter);
 app.use('/api/register', registerRouter)
-app.use('/api/book', bookRouter)
+app.use('/api/product', productRouter)
 
 app.listen(PORT, ()=>{
     console.log('Server running on port '+ PORT)

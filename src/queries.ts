@@ -1,14 +1,65 @@
-// import { PrismaClient } from '@prisma/client';
-// import { withAccelerate } from '@prisma/extension-accelerate';
+import { $Enums, PrismaClient } from '@prisma/client';
+import { withAccelerate } from '@prisma/extension-accelerate';
 
-// const prisma = new PrismaClient()
-//   .$extends(withAccelerate());
+const prisma = new PrismaClient()
+  .$extends(withAccelerate());
 
 // // A `main` function so that we can use async/await
-// async function main() {
+async function main() {
 
 //   const user1Email = `alice${Date.now()}@prisma.io`;
 //   const user2Email = `bob${Date.now()}@prisma.io`;
+
+  
+
+
+  
+    
+  // const circuit1 = await prisma.circuit.create({
+  //   data:{
+  //     product:{
+  //       create:{
+  //         name: "Circuit 1",
+  //         description: "First Circuit",
+  //         price: 120,
+  //         stock: 20,
+  //         image: "https://ucarecdn.com/00fc9333-f3c9-4c4f-bb2f-2f11839e9997/MINI4WDJAPANCUPJUNIORCIRCUITSPECIALCOLOREDITIONYELLOW.jpg",
+  //         type: $Enums.ProductType.Circuit,
+  //       }
+  //     }
+  //   }
+  // })
+
+  // const circuit1 = await prisma.circuit.findUnique({
+  //   where:{
+  //     id: "f5eaa8ff-5a99-423d-ae6a-e513f12024ec",
+  //   },
+  //   include:{
+  //     product:true
+  //   }
+  // })
+
+  // console.log(circuit1)
+
+  // const allproduct = await prisma.product.findMany({
+  //   include:{
+  //     mini4wd: true,
+  //     accessory: true,
+  //     circuit: true,
+  //     tool: true
+  //   }
+  // })
+  //   console.log(allproduct)
+
+// const allmini4wd = await prisma.mini4wd.findMany({
+//   include:{
+//     product: true
+//   }
+// })
+// console.log(allmini4wd)
+
+
+
 
 //   // Seed the database with users and posts
 //   const user1 = await prisma.user.create({
@@ -97,14 +148,14 @@
 //     });
 //   console.log(`Retrieved all posts from a specific user: ${JSON.stringify(postsByUser)}`);
 
-// }
+}
 
-// main()
-//   .then(async () => {
-//     await prisma.$disconnect();
-//   })
-//   .catch(async (e) => {
-//     console.error(e);
-//     await prisma.$disconnect();
-//     process.exit(1);
-//   });
+main()
+  .then(async () => {
+    await prisma.$disconnect();
+  })
+  .catch(async (e) => {
+    console.error(e);
+    await prisma.$disconnect();
+    process.exit(1);
+  });

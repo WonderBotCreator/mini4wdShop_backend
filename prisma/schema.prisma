@@ -7,22 +7,120 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model User {
-  id      String     @id @default(uuid())
-  email   String   @unique
-  username  String @unique
+
+model ShopOwner{
+  id String @id @default(uuid())
+  username String @unique
+  email String @unique
   passwordHash String
-  books Book[]
 }
 
-model Book{
-  id      String     @id @default(uuid())
-  createdAt DateTime @default(now())
-  title String @db.VarChar(255)
-  description String
-  author User? @relation(fields:[authorId], references: [id])
-  authorId String?
+
+model Customer{
+  id String @id @default(uuid())
+  username String @unique
+  email String @unique
+  passwordHash String
+  orders Order[]
+  cart Cart? 
+  profile Profile?
 }
+
+model Profile{
+  id String @id @default(uuid())
+  firstname String
+  lastname String
+  address String
+  phone String
+  owner Customer? @relation(fields: [ownerId], references: [id])
+  ownerId String @unique
+}
+
+
+model Product{
+  id String @id @default(uuid())
+  name String @db.VarChar(255)
+  price Int
+  stock Int
+  description String
+  image String?
+  type ProductType
+  mini4wd Mini4wd?
+  tool Tool?
+  accessory Accessory?
+  circuit Circuit?
+}
+
+
+model OrderItem{
+  id String @id @default(uuid())
+  productId String
+  amount Int
+  order Order? @relation(fields: [orderId], references: [id])
+  orderId String
+}
+
+model CartItem{
+  id String @id @default(uuid())
+  productId String
+  amount Int
+  cart Cart? @relation(fields: [cartId], references: [id])
+  cartId String
+}
+
+model Cart{
+  id String @id @default(uuid())
+  cartItems CartItem[]
+  owner Customer? @relation(fields: [ownerId], references: [id])
+  ownerId String @unique
+}
+
+model Order{
+  id String @id @default(uuid())
+  orderItems OrderItem[]
+  createdAt DateTime @default(now())
+  owner Customer? @relation(fields: [ownerId], references: [id])
+  ownerId String
+  status String
+  address String
+  phone String
+}
+
+
+
+enum ProductType{
+  Mini4wd
+  Tool
+  Accessory
+  Circuit
+}
+
+model Mini4wd{
+  id String @id @default(uuid())
+  chassisType String
+  product Product @relation(fields: [productId], references: [id])
+  productId String @unique
+}
+
+model Tool{
+  id String @id @default(uuid())
+  product Product @relation(fields: [productId], references: [id])
+  productId String @unique
+}
+
+model Accessory{
+  id String @id @default(uuid())
+  accessoryType String
+  product Product @relation(fields: [productId], references: [id])
+  productId String @unique
+}
+
+model Circuit{
+  id String @id @default(uuid())
+  product Product @relation(fields: [productId], references: [id])
+  productId String @unique
+}
+
 
 
 
