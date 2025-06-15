@@ -4,6 +4,7 @@ import cors from 'cors';
 
 import productRouter from './controllers/Product';
 import registerRouter from './controllers/register';
+import loginRouter from './controllers/login';
 
 const app = express();
 
@@ -15,7 +16,7 @@ app.get("/", (req, res) => {
   res.send("Home page");
 });
 
-// app.use('/api/login', loginRouter);
+app.use('/api/login', loginRouter);
 app.use('/api/register', registerRouter)
 app.use('/api/product', productRouter)
 
