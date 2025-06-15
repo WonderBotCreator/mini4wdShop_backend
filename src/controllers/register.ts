@@ -48,7 +48,7 @@ registerRouter.post(
 
 
             if (alreadyUsername) {
-                res.status(400).send({ message: "This username is already existed", status: "error" })
+                res.status(400).send({error: [{message: "This username is already used"}], status: "error" })
                 return
             }
 
@@ -59,7 +59,7 @@ registerRouter.post(
             })
 
             if (alreadyEmail) {
-                res.status(400).send({ message: "This email is already existed", status: "error" })
+                res.status(400).send({ message: "This email is already used", status: "error" })
                 return
             }
 
