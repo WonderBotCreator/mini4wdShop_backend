@@ -5,6 +5,7 @@ import cors from 'cors';
 import productRouter from './controllers/Product';
 import registerRouter from './controllers/register';
 import loginRouter from './controllers/login';
+import cartRouter from './controllers/cart';
 
 const app = express();
 
@@ -19,6 +20,7 @@ app.get("/", (req, res) => {
 app.use('/api/login', loginRouter);
 app.use('/api/register', registerRouter)
 app.use('/api/product', productRouter)
+app.use('/api/cart', cartRouter)
 
 app.listen(PORT, ()=>{
     console.log('Server running on port '+ PORT)
