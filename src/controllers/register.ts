@@ -59,7 +59,7 @@ registerRouter.post(
             })
 
             if (alreadyEmail) {
-                res.status(400).send({ message: "This email is already used", status: "error" })
+                res.status(400).send({error: [{message: "This email is already used"}], status: "error" })
                 return
             }
 
