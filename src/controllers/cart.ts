@@ -103,7 +103,7 @@ cartRouter.get('/', async(request, response)=>{
 
 
 cartRouter.delete('/:productId', async(request, response)=>{
-    const {productId} = request.body
+    const productId = request.params.productId
     const token = getTokenFrom(request.get('authorization'))
     //let decodedToken: DecodedToken|null = null;
 
