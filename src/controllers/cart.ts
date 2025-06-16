@@ -132,9 +132,16 @@ cartRouter.delete('/:id', async(request, response)=>{
     console.log(productId)
 
 
+     const cartItemObject = await prisma.cartItem.findFirst({
+            where:{
+                id: productId
+            }
+        }) 
+
+
     const deleteCartItem = await prisma.cartItem.deleteMany({
         where:{
-            id: productId
+            id: cartItemObject?.id
         }
     })
 
