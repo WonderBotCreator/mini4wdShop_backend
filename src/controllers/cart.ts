@@ -106,7 +106,7 @@ cartRouter.delete('/:id', async(request, response)=>{
     const productId = request.params.id
     const token = getTokenFrom(request.get('authorization'))
     //let decodedToken: DecodedToken|null = null;
-
+    console.log(productId)
     let userID = undefined
     if(token!== null)
     {
