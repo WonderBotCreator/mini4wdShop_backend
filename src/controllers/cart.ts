@@ -102,8 +102,8 @@ cartRouter.get('/', async(request, response)=>{
 })
 
 
-cartRouter.delete('/:productId', async(request, response)=>{
-    const productId = request.params.productId
+cartRouter.delete('/:id', async(request, response)=>{
+    const productId = request.params.id
     const token = getTokenFrom(request.get('authorization'))
     //let decodedToken: DecodedToken|null = null;
 
@@ -128,6 +128,8 @@ cartRouter.delete('/:productId', async(request, response)=>{
             cart: true
         }
     })
+
+    console.log(productId)
 
 
     const deleteCartItem = await prisma.cartItem.delete({

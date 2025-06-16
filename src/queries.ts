@@ -81,6 +81,15 @@ async function main() {
 // console.log(cart)
 
 
+// const deleteItem = await prisma.cartItem.delete({
+//   where:{
+//     id: 'e566a794-7479-4da0-a453-111ecbf1beb3'
+//   }
+// })
+
+// console.log('delete success')
+
+
 //   // Seed the database with users and posts
 //   const user1 = await prisma.user.create({
 //     data: {
