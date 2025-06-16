@@ -98,7 +98,46 @@ cartRouter.get('/', async(request, response)=>{
     
     response.status(200).send({products: products, message: "get cart successfully", status: "success"})
 
+
+})
+
+
+cartRouter.delete('/', async(request, response)=>{
+    const {productId} = request.body
+    const token = getTokenFrom(request.get('authorization'))
+    //let decodedToken: DecodedToken|null = null;
+
+    let userID = undefined
+    if(token!== null)
+    {
+         //decodedToken = jwt.verify(token, process.env.SECRET as string) 
+         userID = userIdFromJWT(token)
+    }
+   
+    if(userID === undefined)
+    {
+        response.status(400).send({message: "Error cannot find any user", status: "error"})
+        return
+    }
     
+    const user = await prisma.customer.findUnique({
+        where:{
+            id: userID
+        },
+        include:{
+            cart: true
+        }
+    })
+
+
+    const deleteCartItem = await prisma.cartItem.delete({
+        where:{
+            id: productId
+        }
+    })
+
+
+     response.status(200).send({ message: "remove item from cart successfully", status: "success" });
 })
 
 
@@ -118,7 +157,7 @@ cartRouter.post('/', async(request, response)=>{
    
     if(userID === undefined)
     {
-        response.status(400).send({message: "Error add book"})
+        response.status(400).send({message: "Error cannot find any user", status: "error"})
         return
     }
     
