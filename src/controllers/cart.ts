@@ -103,10 +103,10 @@ cartRouter.get('/', async(request, response)=>{
 
 
 cartRouter.delete('/:id', async(request, response)=>{
-    const productId = request.params.id
+    const itemId = request.params.id
     const token = getTokenFrom(request.get('authorization'))
     //let decodedToken: DecodedToken|null = null;
-    console.log(productId)
+
     let userID = undefined
     if(token!== null)
     {
@@ -132,19 +132,9 @@ cartRouter.delete('/:id', async(request, response)=>{
 
 
 
-     const cartItemObject = await prisma.cartItem.findUnique({
-            where:{
-                id: productId
-            }
-        }) 
-
-
-    console.log(cartItemObject)
-
-
     const deleteCartItem = await prisma.cartItem.delete({
         where:{
-            id: cartItemObject?.id
+            id: itemId
         }
     })
 
