@@ -90,7 +90,7 @@ cartRouter.get('/', async(request, response)=>{
                 }
             })
 
-            console.log(product)
+            //console.log(product)
 
             products.push({product: product, amount: cart?.cartItems[i].amount})
         }
