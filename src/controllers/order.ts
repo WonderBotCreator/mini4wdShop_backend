@@ -125,6 +125,12 @@ orderRouter.post('/', async (request, response) => {
                 }
             }
         })
+
+        const deleteCartItem = await prisma.cartItem.delete({
+        where: {
+                id: cart[i].itemId
+            }
+        })
     }
 
     response.status(200).send({message: "submit order successfully", status: "success"})
