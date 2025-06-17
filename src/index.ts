@@ -7,6 +7,7 @@ import registerRouter from './controllers/register';
 import loginRouter from './controllers/login';
 import cartRouter from './controllers/cart';
 import profileRouter from './controllers/profile';
+import orderRouter from './controllers/order';
 
 const app = express();
 
@@ -23,6 +24,7 @@ app.use('/api/register', registerRouter)
 app.use('/api/product', productRouter)
 app.use('/api/cart', cartRouter)
 app.use('/api/profile', profileRouter)
+app.use('/api/order', orderRouter)
 
 app.listen(PORT, ()=>{
     console.log('Server running on port '+ PORT)

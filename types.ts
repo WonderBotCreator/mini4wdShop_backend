@@ -17,10 +17,10 @@ export const productSchema = z.object({
 
 
 export const profileSchema = z.object({
-    firstname: z.string({required_error: "firstname is required"}),
-    lastname: z.string({required_error: "lastname is required"}),
-    address: z.string({required_error: "address is required"}),
-    phone: z.string({required_error: "phone is required"})
+    firstname: z.string({required_error: "firstname is required"}).min(1, "firstname is required"),
+    lastname: z.string({required_error: "lastname is required"}).min(1, "lastname is required"),
+    address: z.string({required_error: "address is required"}).min(1, "address is required"),
+    phone: z.string({required_error: "phone is required"}).min(1, "phone is required")
 })
 
 
