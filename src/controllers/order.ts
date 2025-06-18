@@ -185,6 +185,16 @@ orderRouter.post('/', async (request, response) => {
             }
         })
 
+
+        const product = await prisma.product.update({
+            where:{
+                id: cart[i].product.id
+            },
+            data:{
+                stock: {decrement: parseInt(cart[i].amount)}
+            }
+        })
+
         const deleteCartItem = await prisma.cartItem.delete({
         where: {
                 id: cart[i].itemId
