@@ -55,17 +55,21 @@ shopOwnerRouter.get('/order', async(request, response)=>{
         return
     }
 
-    const user = await prisma.customer.findUnique({
+    const user = await prisma.shopOwner.findUnique({
         where: {
             id: userID
         },
-        include: {
-            cart: true,
-            orders: true
-        }
     })
 
-    response.status(200).send({orders: user?.orders, message: "get orders successfully", status: "success"})
+    if(!user)
+    {
+        response.status(400).send({ message: "Error cannot find any user", status: "error" })
+        return
+    }
+
+    const orders = await prisma.order.findMany({})
+
+    response.status(200).send({orders: orders, message: "get orders successfully", status: "success"})
 })
 
 
