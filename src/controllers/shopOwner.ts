@@ -43,7 +43,7 @@ shopOwnerRouter.get('/order', async(request, response)=>{
     
     const token = getTokenFrom(request.get('authorization'))
     //let decodedToken: DecodedToken|null = null;
-
+    console.log(token)
     let userID = undefined
     if (token !== null) {
         //decodedToken = jwt.verify(token, process.env.SECRET as string) 
