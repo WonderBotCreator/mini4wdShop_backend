@@ -43,7 +43,6 @@ shopOwnerRouter.get('/order', async(request, response)=>{
     
     const token = getTokenFrom(request.get('authorization'))
     //let decodedToken: DecodedToken|null = null;
-    console.log(token)
     let userID = undefined
     if (token !== null) {
         //decodedToken = jwt.verify(token, process.env.SECRET as string) 
@@ -71,6 +70,61 @@ shopOwnerRouter.get('/order', async(request, response)=>{
 
     response.status(200).send({orders: orders, message: "get orders successfully", status: "success"})
 })
+
+
+shopOwnerRouter.get('/order/:id', async(request, response)=>{
+    const orderId = request.params.id
+    const token = getTokenFrom(request.get('authorization'))
+    //let decodedToken: DecodedToken|null = null;
+
+    let userID = undefined
+    if (token !== null) {
+        //decodedToken = jwt.verify(token, process.env.SECRET as string) 
+        userID = userIdFromJWT(token)
+    }
+
+    if (userID === undefined) {
+        response.status(400).send({ message: "Error cannot find any user", status: "error" })
+        return
+    }
+
+    const user = await prisma.shopOwner.findUnique({
+        where: {
+            id: userID
+        },
+    })
+
+    const orderObject = await prisma.order.findUnique({
+        where:{
+            id: orderId
+        },
+        include:{
+            orderItems: true
+        }
+    })
+
+    let products = []
+
+    if(orderObject?.orderItems)
+    {
+        for(let i = 0;i< orderObject?.orderItems.length;i++)
+        {
+            const product = await prisma.product.findUnique({
+                where: {
+                    id: orderObject?.orderItems[i].productId
+                }
+            })
+
+            products.push({ itemId: orderObject?.orderItems[i].id, product: product, amount: orderObject?.orderItems[i].amount })
+
+        }
+    }
+
+    
+
+    response.status(200).send({order: orderObject, products: products, message: "get order successfully", status: "success"})
+})
+
 
 
 
